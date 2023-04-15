@@ -52,6 +52,17 @@ class MapScreen extends HookConsumerWidget {
                     builder: (ctx) => Container(
                       child: Column(
                         children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(worldHeritage.name),
+                          ),
                           Icon(
                             Icons.place,
                             color: Colors.blue,
