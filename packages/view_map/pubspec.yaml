@@ -9,9 +9,6 @@ environment:
 
 dependencies:
 
-  core_data:
-    path: ../core_data
-
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.0
