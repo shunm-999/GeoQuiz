@@ -1,4 +1,6 @@
-# melos_managed_dependency_overrides: view_map
+# melos_managed_dependency_overrides: view_map,core_data
 dependency_overrides:
+  core_data:
+    path: packages\\core_data
   view_map:
     path: packages\\view_map
