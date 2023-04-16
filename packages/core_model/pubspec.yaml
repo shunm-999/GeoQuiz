@@ -1,4 +1,4 @@
-name: core_repository
+name: core_model
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
@@ -16,7 +16,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner:
   freezed_annotation:
 
 # For information on the generic Dart part of this file, see the
