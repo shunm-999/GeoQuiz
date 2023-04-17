@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: view_map,core_data,core_model,core_repository
+dependency_overrides:
+  core_data:
+    path: packages\\core_data
+  core_model:
+    path: packages\\core_model
+  core_repository:
+    path: packages\\core_repository
+  view_map:
+    path: packages\\view_map

@@ -4,17 +4,31 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:view_map/di/viewmodel_provider.dart';
 
-class MapScreen extends HookConsumerWidget {
-  final MapController _mapController = MapController();
-
-  MapScreen({super.key});
+class MapScreen extends StatefulHookConsumerWidget {
+  const MapScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends ConsumerState<MapScreen> {
+  final MapController _mapController = MapController();
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = ref.read(mapViewModelProvider.notifier);
+    viewModel.fetchGeoElements();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final uiState = ref.watch(mapViewModelProvider);
     final viewModel = ref.read(mapViewModelProvider.notifier);
 
-    const double markerSize = 40;
+    const double markerSize = 15;
+    const double initialZoom = 3;
+    const double maxZoom = 10;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,9 +40,9 @@ class MapScreen extends HookConsumerWidget {
           mapController: _mapController,
           options: MapOptions(
             center: uiState.initialPoint,
-            zoom: 3,
-            maxZoom: 10,
-            minZoom: 3,
+            zoom: initialZoom,
+            maxZoom: maxZoom,
+            minZoom: initialZoom,
             interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
             onMapEvent: (MapEvent mapEvent) {
               if (mapEvent is MapEventMoveEnd) {
@@ -40,36 +54,19 @@ class MapScreen extends HookConsumerWidget {
             TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
             MarkerLayer(
-              markers: uiState.worldHeritageList.map(
+              markers: uiState.mapPinList.map(
                 (worldHeritage) {
-                  final size = markerSize * (uiState.currentZoom / 3);
+                  final size = markerSize * (uiState.currentZoom / initialZoom);
 
                   return Marker(
                     width: size * 2,
                     height: size * 2,
                     point:
                         LatLng(worldHeritage.latitude, worldHeritage.longitude),
-                    builder: (ctx) => Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(worldHeritage.name),
-                          ),
-                          Icon(
-                            Icons.place,
-                            color: Colors.blue,
-                            size: size,
-                          ),
-                        ],
-                      ),
+                    builder: (ctx) => Icon(
+                      Icons.place,
+                      color: Colors.blue,
+                      size: size,
                     ),
                   );
                 },
