@@ -5,8 +5,9 @@ part 'overpass_response.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class OverpassResponse {
-  final String version;
+  final double version;
   final String generator;
+  @JsonKey(name: "elements")
   final List<GeoElement> geoElements;
 
   OverpassResponse({

@@ -7,10 +7,10 @@ part of 'geo_element.dart';
 // **************************************************************************
 
 GeoElement _$GeoElementFromJson(Map<String, dynamic> json) => GeoElement(
-      type: json['type'] as String,
-      elementId: json['id'] as String,
-      latitude: json['lat'] as String?,
-      longitude: json['lon'] as String?,
+      type: json['type'] as String?,
+      elementId: json['id'] as int,
+      latitude: (json['lat'] as num?)?.toDouble(),
+      longitude: (json['lon'] as num?)?.toDouble(),
       tags: json['tags'] == null
           ? null
           : GeoTags.fromJson(json['tags'] as Map<String, dynamic>),

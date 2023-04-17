@@ -10,6 +10,6 @@ abstract class OverpassClient {
 
   @GET("/interpreter")
   Future<OverpassResponse> fetchGeoElements({
-    @Query("data") String data,
+    @Query("data") required String data,
   });
 }

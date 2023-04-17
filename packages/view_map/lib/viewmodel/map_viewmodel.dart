@@ -1,3 +1,4 @@
+import 'package:core_repository/geo_element_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -53,8 +54,11 @@ const List<WorldHeritage> _worldHeritageList = [
 ];
 
 class MapViewModel extends StateNotifier<MapUiState> {
-  MapViewModel()
-      : super(
+  final GeoElementRepository geoElementRepository;
+
+  MapViewModel({
+    required this.geoElementRepository,
+  }) : super(
           MapUiState(
             initialPoint: LatLng(35.681, 139.767),
             currentZoom: 3,
@@ -62,9 +66,21 @@ class MapViewModel extends StateNotifier<MapUiState> {
               _worldHeritageList,
             ),
           ),
-        );
+        ) {
+    fetchGeoElements();
+  }
 
   void updateCurrentZoom(double currentZoom) {
     state = state.copyWith(currentZoom: currentZoom);
+  }
+
+  Future<void> fetchGeoElements() async {
+    await geoElementRepository.fetchGeoElements().then((result) {
+      result.when(
+          success: (geoElements) {
+            print(geoElements);
+          },
+          failure: (error) {});
+    });
   }
 }

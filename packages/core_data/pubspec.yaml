@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.1.1
+
   retrofit: ^4.0.1
   dio: ^5.1.1
   freezed: ^2.3.2

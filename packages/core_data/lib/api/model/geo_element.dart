@@ -5,13 +5,13 @@ part 'geo_element.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class GeoElement {
-  final String type;
+  final String? type;
   @JsonKey(name: "id")
-  final String elementId;
+  final int elementId;
   @JsonKey(name: "lat")
-  final String? latitude;
+  final double? latitude;
   @JsonKey(name: "lon")
-  final String? longitude;
+  final double? longitude;
   final GeoTags? tags;
 
   GeoElement({

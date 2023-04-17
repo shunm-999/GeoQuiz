@@ -1,7 +1,7 @@
 name: core_repository
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: '>=2.19.4 <3.0.0'
@@ -10,6 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  core_model:
+    path: ../core_model
+  core_data:
+    path: ../core_data
+
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.1.1
+
+  dio: ^5.1.1
   freezed: ^2.3.2
 
 dev_dependencies:

@@ -8,9 +8,9 @@ part of 'overpass_response.dart';
 
 OverpassResponse _$OverpassResponseFromJson(Map<String, dynamic> json) =>
     OverpassResponse(
-      version: json['version'] as String,
+      version: (json['version'] as num).toDouble(),
       generator: json['generator'] as String,
-      geoElements: (json['geoElements'] as List<dynamic>)
+      geoElements: (json['elements'] as List<dynamic>)
           .map((e) => GeoElement.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -19,5 +19,5 @@ Map<String, dynamic> _$OverpassResponseToJson(OverpassResponse instance) =>
     <String, dynamic>{
       'version': instance.version,
       'generator': instance.generator,
-      'geoElements': instance.geoElements.map((e) => e.toJson()).toList(),
+      'elements': instance.geoElements.map((e) => e.toJson()).toList(),
     };
