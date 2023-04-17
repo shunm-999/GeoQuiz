@@ -7,51 +7,38 @@ import 'package:latlong2/latlong.dart';
 class MapUiState {
   final LatLng initialPoint;
   final double currentZoom;
-  final List<WorldHeritage> worldHeritageList;
+  final List<MapPin> mapPinList;
 
   const MapUiState({
     required this.initialPoint,
     required this.currentZoom,
-    required this.worldHeritageList,
+    required this.mapPinList,
   });
 
   MapUiState copyWith({
     LatLng? initialPoint,
     double? currentZoom,
-    List<WorldHeritage>? worldHeritageList,
+    List<MapPin>? mapPinList,
   }) {
     return MapUiState(
       initialPoint: initialPoint ?? this.initialPoint,
       currentZoom: currentZoom ?? this.currentZoom,
-      worldHeritageList: worldHeritageList ?? this.worldHeritageList,
+      mapPinList: mapPinList ?? this.mapPinList,
     );
   }
 }
 
-class WorldHeritage {
+class MapPin {
+  final String name;
   final double latitude;
   final double longitude;
-  final String name;
 
-  const WorldHeritage(
-      {required this.latitude, required this.longitude, required this.name});
+  MapPin({
+    required this.name,
+    required this.latitude,
+    required this.longitude,
+  });
 }
-
-const WorldHeritage _japan =
-    WorldHeritage(latitude: 35.681, longitude: 139.767, name: "japan");
-const WorldHeritage _london =
-    WorldHeritage(latitude: 51.5, longitude: -0.09, name: "london");
-const WorldHeritage _paris =
-    WorldHeritage(latitude: 48.8566, longitude: 2.3522, name: "paris");
-const WorldHeritage _dublin =
-    WorldHeritage(latitude: 53.3498, longitude: -6.2603, name: "doblin");
-
-const List<WorldHeritage> _worldHeritageList = [
-  _japan,
-  _london,
-  _paris,
-  _dublin
-];
 
 class MapViewModel extends StateNotifier<MapUiState> {
   final GeoElementRepository geoElementRepository;
@@ -62,13 +49,9 @@ class MapViewModel extends StateNotifier<MapUiState> {
           MapUiState(
             initialPoint: LatLng(35.681, 139.767),
             currentZoom: 3,
-            worldHeritageList: List.unmodifiable(
-              _worldHeritageList,
-            ),
+            mapPinList: List<MapPin>.empty(),
           ),
-        ) {
-    fetchGeoElements();
-  }
+        );
 
   void updateCurrentZoom(double currentZoom) {
     state = state.copyWith(currentZoom: currentZoom);
@@ -78,7 +61,15 @@ class MapViewModel extends StateNotifier<MapUiState> {
     await geoElementRepository.fetchGeoElements().then((result) {
       result.when(
           success: (geoElements) {
-            print(geoElements);
+            final mapPinList = geoElements.map((element) {
+              return MapPin(
+                name: element.tags?.name ?? "",
+                latitude: element.latitude ?? 0,
+                longitude: element.longitude ?? 0,
+              );
+            }).toList();
+
+            state = state.copyWith(mapPinList: mapPinList.take(50).toList());
           },
           failure: (error) {});
     });

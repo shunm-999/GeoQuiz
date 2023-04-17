@@ -12,10 +12,11 @@ class GeoElementRepositoryImpl with GeoElementRepository {
     required OverpassClient client,
   }) : _client = client;
 
+  // TODO 範囲の指定（東西南北の緯度経度）
   @override
-  Future<Result<List<GeoElement>>> fetchGeoElements() {
-    const data =
-        '[out:json][timeout:25];(node["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125);way["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125);relation["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125););out body;>;out skel qt;';
+  Future<Result<List<GeoElement>>> fetchGeoElements({int timeout = 25}) {
+    final data =
+        '[out:json][timeout:$timeout];(node["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125);way["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125);relation["historic"="memorial"](33.215712251730736,139.24072265625,36.35052700542763,143.876953125););out body;>;out skel qt;';
     return _client.fetchGeoElements(data: data).then((response) {
       final geoElements = response.geoElements;
       return Result<List<GeoElement>>.success(
