@@ -14,8 +14,8 @@ As a Product Manager, I recommend the following functions and screens for the Ge
     - View achievements and leaderboards.
 
 3. Game Screen:
-    - Display the interactive world map.
-    - Zoom and pan controls for the map.
+    - ✅Display the interactive world map.
+    - ✅Zoom and pan controls for the map.
     - Display quiz questions and multiple-choice answers.
     - AI chatbox for hints, explanations, and user interaction.
     - Timer and score display.
