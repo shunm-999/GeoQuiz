@@ -16,6 +16,7 @@ As a Product Manager, I recommend the following functions and screens for the Ge
 3. Game Screen:
     - ✅Display the interactive world map.
     - ✅Zoom and pan controls for the map.
+    - ✅Search historic memorial place.
     - Display quiz questions and multiple-choice answers.
     - AI chatbox for hints, explanations, and user interaction.
     - Timer and score display.
