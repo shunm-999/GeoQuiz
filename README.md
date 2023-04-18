@@ -1,5 +1,7 @@
 # GeoQuiz
 
+Below message is created by ChatGPT
+
 ## Required Feature
 
 As a Product Manager, I recommend the following functions and screens for the GeoQuiz application:
