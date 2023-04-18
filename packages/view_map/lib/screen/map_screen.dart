@@ -17,8 +17,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   @override
   void initState() {
     super.initState();
+
+    final uiState = ref.read(mapViewModelProvider);
+    final currentPoint = uiState.initialPoint;
     final viewModel = ref.read(mapViewModelProvider.notifier);
-    viewModel.fetchGeoElements();
+
+    viewModel.fetchGeoElements(
+      start: currentPoint.longitude - 3,
+      top: currentPoint.latitude - 5,
+      end: currentPoint.longitude + 3,
+      bottom: currentPoint.latitude + 5,
+    );
   }
 
   @override
@@ -26,9 +35,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final uiState = ref.watch(mapViewModelProvider);
     final viewModel = ref.read(mapViewModelProvider.notifier);
 
-    const double markerSize = 15;
-    const double initialZoom = 3;
-    const double maxZoom = 10;
+    const double markerSize = 25;
+    const double initialZoom = 5;
+    const double maxZoom = 20;
 
     return Scaffold(
       appBar: AppBar(
@@ -75,6 +84,20 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final currentPoint = _mapController.center;
+          viewModel.fetchGeoElements(
+            start: currentPoint.longitude - 3,
+            top: currentPoint.latitude - 5,
+            end: currentPoint.longitude + 3,
+            bottom: currentPoint.latitude + 5,
+          );
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.search),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

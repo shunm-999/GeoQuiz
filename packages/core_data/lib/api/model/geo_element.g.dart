@@ -6,17 +6,18 @@ part of 'geo_element.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GeoElement _$GeoElementFromJson(Map<String, dynamic> json) => GeoElement(
+GeoElementResponseData _$GeoElementFromJson(Map<String, dynamic> json) =>
+    GeoElementResponseData(
       type: json['type'] as String?,
       elementId: json['id'] as int,
       latitude: (json['lat'] as num?)?.toDouble(),
       longitude: (json['lon'] as num?)?.toDouble(),
       tags: json['tags'] == null
           ? null
-          : GeoTags.fromJson(json['tags'] as Map<String, dynamic>),
+          : GeoTagsResponseData.fromJson(json['tags'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$GeoElementToJson(GeoElement instance) =>
+Map<String, dynamic> _$GeoElementToJson(GeoElementResponseData instance) =>
     <String, dynamic>{
       'type': instance.type,
       'id': instance.elementId,

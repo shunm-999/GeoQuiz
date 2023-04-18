@@ -3,16 +3,16 @@ import 'package:json_annotation/json_annotation.dart';
 part 'geo_tags.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class GeoTags {
+class GeoTagsResponseData {
   final String historic;
   final String? name;
 
-  GeoTags({
+  GeoTagsResponseData({
     required this.historic,
     required this.name,
   });
 
-  factory GeoTags.fromJson(Map<String, dynamic> json) =>
+  factory GeoTagsResponseData.fromJson(Map<String, dynamic> json) =>
       _$GeoTagsFromJson(json);
 
   Map<String, dynamic> toJson() => _$GeoTagsToJson(this);

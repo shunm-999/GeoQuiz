@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final _dioProvider = Provider<Dio>((ref) => Dio());
 
-final overpassClientProvider = Provider<OverpassClient>((ref){
+final overpassClientProvider = Provider<OverpassClient>((ref) {
   final dioProvider = ref.watch(_dioProvider);
   return OverpassClient(dioProvider);
 });

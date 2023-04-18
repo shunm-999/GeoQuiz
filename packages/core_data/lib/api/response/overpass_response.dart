@@ -8,7 +8,7 @@ class OverpassResponse {
   final double version;
   final String generator;
   @JsonKey(name: "elements")
-  final List<GeoElement> geoElements;
+  final List<GeoElementResponseData> geoElements;
 
   OverpassResponse({
     required this.version,
