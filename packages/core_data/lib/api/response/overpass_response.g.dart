@@ -11,7 +11,8 @@ OverpassResponse _$OverpassResponseFromJson(Map<String, dynamic> json) =>
       version: (json['version'] as num).toDouble(),
       generator: json['generator'] as String,
       geoElements: (json['elements'] as List<dynamic>)
-          .map((e) => GeoElement.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => GeoElementResponseData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

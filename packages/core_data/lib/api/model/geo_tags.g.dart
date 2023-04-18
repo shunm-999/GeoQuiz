@@ -6,12 +6,14 @@ part of 'geo_tags.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GeoTags _$GeoTagsFromJson(Map<String, dynamic> json) => GeoTags(
+GeoTagsResponseData _$GeoTagsFromJson(Map<String, dynamic> json) =>
+    GeoTagsResponseData(
       historic: json['historic'] as String,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$GeoTagsToJson(GeoTags instance) => <String, dynamic>{
+Map<String, dynamic> _$GeoTagsToJson(GeoTagsResponseData instance) =>
+    <String, dynamic>{
       'historic': instance.historic,
       'name': instance.name,
     };

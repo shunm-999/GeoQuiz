@@ -57,21 +57,34 @@ class MapViewModel extends StateNotifier<MapUiState> {
     state = state.copyWith(currentZoom: currentZoom);
   }
 
-  Future<void> fetchGeoElements() async {
-    await geoElementRepository.fetchGeoElements().then((result) {
+  Future<void> fetchGeoElements({
+    required double start,
+    required double top,
+    required double end,
+    required double bottom,
+  }) async {
+    await geoElementRepository
+        .fetchGeoElements(
+      start: start,
+      top: top,
+      end: end,
+      bottom: bottom,
+    )
+        .then((result) {
       result.when(
-          success: (geoElements) {
-            final mapPinList = geoElements.map((element) {
-              return MapPin(
-                name: element.tags?.name ?? "",
-                latitude: element.latitude ?? 0,
-                longitude: element.longitude ?? 0,
-              );
-            }).toList();
+        success: (geoElements) {
+          final mapPinList = geoElements.map((element) {
+            return MapPin(
+              name: element.tags?.name ?? "",
+              latitude: element.latitude ?? 0,
+              longitude: element.longitude ?? 0,
+            );
+          }).toList();
 
-            state = state.copyWith(mapPinList: mapPinList.take(50).toList());
-          },
-          failure: (error) {});
+          state = state.copyWith(mapPinList: mapPinList.take(50).toList());
+        },
+        failure: (error) {},
+      );
     });
   }
 }
