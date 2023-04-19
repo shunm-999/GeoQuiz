@@ -13,6 +13,8 @@ dependencies:
 
   core_repository:
     path: ../core_repository
+  core_domain:
+    path: ../core_domain
 
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^2.1.1

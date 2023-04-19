@@ -144,6 +144,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  core_domain:
+    dependency: "direct overridden"
+    description:
+      path: "packages/core_domain"
+      relative: true
+    source: path
+    version: "0.0.1"
   core_model:
     dependency: "direct overridden"
     description:

@@ -11,6 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  core_model:
+    path: ../core_model
+
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
