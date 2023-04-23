@@ -1,3 +1,4 @@
+import 'package:core_domain/map/map_coordinates_evenly_spaced_usecase.dart';
 import 'package:core_repository/geo_element_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,11 +42,16 @@ class MapPin {
 }
 
 class MapViewModel extends StateNotifier<MapUiState> {
-  final GeoElementRepository geoElementRepository;
+  final GeoElementRepository _geoElementRepository;
+  final MapCoordinatesEvenlySpacedUseCase _mapCoordinatesEvenlySpacedUseCase;
 
   MapViewModel({
-    required this.geoElementRepository,
-  }) : super(
+    required GeoElementRepository geoElementRepository,
+    required MapCoordinatesEvenlySpacedUseCase
+        mapCoordinatesEvenlySpacedUseCase,
+  })  : _geoElementRepository = geoElementRepository,
+        _mapCoordinatesEvenlySpacedUseCase = mapCoordinatesEvenlySpacedUseCase,
+        super(
           MapUiState(
             initialPoint: LatLng(35.681, 139.767),
             currentZoom: 3,
@@ -63,7 +69,7 @@ class MapViewModel extends StateNotifier<MapUiState> {
     required double end,
     required double bottom,
   }) async {
-    await geoElementRepository
+    await _geoElementRepository
         .fetchGeoElements(
       start: start,
       top: top,
@@ -73,7 +79,14 @@ class MapViewModel extends StateNotifier<MapUiState> {
         .then((result) {
       result.when(
         success: (geoElements) {
-          final mapPinList = geoElements.map((element) {
+          final selectedGeoElements = _mapCoordinatesEvenlySpacedUseCase.invoke(
+            count: 100,
+            geoElements: geoElements,
+            centerLatitude: (top + bottom) / 2,
+            centerLongitude: (start + end) / 2,
+          );
+
+          final mapPinList = selectedGeoElements.map((element) {
             return MapPin(
               name: element.tags?.name ?? "",
               latitude: element.latitude ?? 0,
@@ -81,7 +94,7 @@ class MapViewModel extends StateNotifier<MapUiState> {
             );
           }).toList();
 
-          state = state.copyWith(mapPinList: mapPinList.take(50).toList());
+          state = state.copyWith(mapPinList: mapPinList);
         },
         failure: (error) {},
       );

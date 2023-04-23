@@ -1,4 +1,4 @@
-name: view_map
+name: core_domain
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
@@ -11,16 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  core_repository:
-    path: ../core_repository
-  core_domain:
-    path: ../core_domain
+  core_model:
+    path: ../core_model
 
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^2.1.1
-
-  flutter_map: ^3.1.0
-  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_test:

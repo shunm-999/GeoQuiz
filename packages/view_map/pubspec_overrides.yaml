@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: core_data,core_model,core_repository
+# melos_managed_dependency_overrides: core_data,core_model,core_repository,core_domain
 dependency_overrides:
   core_data:
     path: ..\\core_data
+  core_domain:
+    path: ..\\core_domain
   core_model:
     path: ..\\core_model
   core_repository:
