@@ -1,8 +1,11 @@
 # GeoQuiz
 
-Below message is created by ChatGPT
+## Screenshot
+<img src="https://user-images.githubusercontent.com/37167834/233836624-33b73448-4d0f-4ae6-a1e0-d9a3b48a6834.png" width="200" />
 
 ## Required Feature
+
+Below message is created by ChatGPT
 
 As a Product Manager, I recommend the following functions and screens for the GeoQuiz application:
 
