@@ -39,7 +39,9 @@ class GeoElementRepositoryImpl with GeoElementRepository {
                   name: e.tags?.name,
                 ),
               ))
-          .toList();
+          .where((element) {
+        return element.tags?.name != null;
+      }).toList();
       return Result<List<GeoElement>>.success(
         geoElements,
       );
