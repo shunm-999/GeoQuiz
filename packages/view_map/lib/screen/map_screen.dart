@@ -3,7 +3,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:view_map/component/geo_element_detail_bottom_sheet.dart';
-import 'package:view_map/di/viewmodel_provider.dart';
+
+import '../viewmodel/map_viewmodel.dart';
 
 class MapScreen extends StatefulHookConsumerWidget {
   const MapScreen({super.key});
