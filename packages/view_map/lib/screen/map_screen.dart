@@ -80,6 +80,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                       onTap: () {
                         showMapPinModelBottomSheet(
                           context: context,
+                          geoElementId: mapPin.id,
                           geoElementName: mapPin.name,
                         );
                       },

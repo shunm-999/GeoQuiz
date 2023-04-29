@@ -5,12 +5,14 @@ import 'package:view_map/viewmodel/chat_message_viewmodel.dart';
 
 void showMapPinModelBottomSheet({
   required BuildContext context,
+  required int geoElementId,
   required String geoElementName,
 }) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return GeoElementDetailBottomSheet(
+        geoElementId: geoElementId,
         geoElementName: geoElementName,
       );
     },
@@ -18,9 +20,14 @@ void showMapPinModelBottomSheet({
 }
 
 class GeoElementDetailBottomSheet extends StatefulHookConsumerWidget {
+  final int geoElementId;
   final String geoElementName;
 
-  const GeoElementDetailBottomSheet({super.key, required this.geoElementName});
+  const GeoElementDetailBottomSheet({
+    super.key,
+    required this.geoElementId,
+    required this.geoElementName,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -35,6 +42,12 @@ class _GeoElementDetailBottomSheetState
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    viewModel.fetchChatMessage(geoElementId: widget.geoElementId);
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _textEditingController.dispose();
@@ -45,7 +58,10 @@ class _GeoElementDetailBottomSheetState
   }
 
   void _onSubmitted(String value) {
-    viewModel.addChatMessage(message: value);
+    viewModel.addChatMessage(
+      geoElementId: widget.geoElementId,
+      message: value,
+    );
     _textEditingController.clear();
     FocusManager.instance.primaryFocus?.unfocus();
   }
@@ -77,7 +93,8 @@ class _GeoElementDetailBottomSheetState
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: _ChatMessageScreen(
-                    chatMessageList: uiState.chatMessageList),
+                  chatMessageList: uiState.chatMessageList,
+                ),
               ),
             ),
             Card(

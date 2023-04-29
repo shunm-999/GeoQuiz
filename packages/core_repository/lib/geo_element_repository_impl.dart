@@ -6,14 +6,13 @@ import 'package:dio/dio.dart';
 
 import 'geo_element_repository.dart';
 
-class GeoElementRepositoryImpl with GeoElementRepository {
+class GeoElementRepositoryImpl extends GeoElementRepository {
   final OverpassClient _client;
 
   GeoElementRepositoryImpl({
     required OverpassClient client,
   }) : _client = client;
 
-  // TODO 範囲の指定（東西南北の緯度経度）
   @override
   Future<Result<List<GeoElement>>> fetchGeoElements({
     int timeout = 25,

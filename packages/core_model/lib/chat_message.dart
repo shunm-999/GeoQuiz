@@ -1,5 +1,6 @@
 mixin ChatMessage {
   int get id;
+  int get geoElementId;
   String get text;
   DateTime get createdAt;
 }
@@ -8,12 +9,15 @@ class UserChatMessage implements ChatMessage {
   @override
   final int id;
   @override
+  final int geoElementId;
+  @override
   final String text;
   @override
   final DateTime createdAt;
 
   const UserChatMessage({
     required this.id,
+    required this.geoElementId,
     required this.text,
     required this.createdAt,
   });
@@ -24,6 +28,7 @@ class UserChatMessage implements ChatMessage {
       other is UserChatMessage &&
           runtimeType == other.runtimeType &&
           id == other.id &&
+          geoElementId == other.geoElementId &&
           text == other.text &&
           createdAt == other.createdAt;
 
@@ -35,12 +40,15 @@ class AiChatMessage implements ChatMessage {
   @override
   final int id;
   @override
+  final int geoElementId;
+  @override
   final String text;
   @override
   final DateTime createdAt;
 
   const AiChatMessage({
     required this.id,
+    required this.geoElementId,
     required this.text,
     required this.createdAt,
   });
@@ -51,6 +59,7 @@ class AiChatMessage implements ChatMessage {
       other is AiChatMessage &&
           runtimeType == other.runtimeType &&
           id == other.id &&
+          geoElementId == other.geoElementId &&
           text == other.text &&
           createdAt == other.createdAt;
 

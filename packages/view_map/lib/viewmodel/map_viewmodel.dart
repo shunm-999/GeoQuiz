@@ -43,11 +43,13 @@ class MapUiState {
 }
 
 class MapPin {
+  final int id;
   final String name;
   final double latitude;
   final double longitude;
 
   MapPin({
+    required this.id,
     required this.name,
     required this.latitude,
     required this.longitude,
@@ -101,6 +103,7 @@ class MapViewModel extends StateNotifier<MapUiState> {
 
           final mapPinList = selectedGeoElements.map((element) {
             return MapPin(
+              id: element.elementId,
               name: element.tags?.name ?? "",
               latitude: element.latitude ?? 0,
               longitude: element.longitude ?? 0,
