@@ -57,3 +57,40 @@ As a Product Manager, I recommend the following functions and screens for the Ge
 - Implement a reward system with in-game currency earned by playing.
 
 These functions and screens should provide a comprehensive and engaging experience for users of the GeoQuiz application.
+
+## How to create json_serializable request/response data which is used by REST API
+
+1. Create file as below 
+
+```dart
+import 'package:core_data/api/model/geo_element.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'overpass_response.g.dart';
+
+@JsonSerializable(explicitToJson: true)
+class OverpassResponse {
+  final double version;
+  final String generator;
+  @JsonKey(name: "elements")
+  final List<GeoElementResponseData> geoElements;
+
+  OverpassResponse({
+    required this.version,
+    required this.generator,
+    required this.geoElements,
+  });
+
+  factory OverpassResponse.fromJson(Map<String, dynamic> json) =>
+      _$OverpassResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OverpassResponseToJson(this);
+}
+```
+
+ - `part <filename>` : Specify the file name where you want to describe the serialize/deserialize process 
+- `explicitToJson: true` means Json data format is nested
+
+2. run command
+`flutter packages pub run build_runner build`
+
