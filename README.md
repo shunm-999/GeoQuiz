@@ -92,5 +92,5 @@ class OverpassResponse {
 - `explicitToJson: true` means Json data format is nested
 
 2. run command
-`flutter packages pub run build_runner build`
+`flutter packages pub run build_runner build --delete-conflicting-outputs`
 
