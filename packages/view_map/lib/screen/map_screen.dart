@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:view_map/di/viewmodel_provider.dart';
+import 'package:view_map/component/geo_element_detail_bottom_sheet.dart';
+
+import '../viewmodel/map_viewmodel.dart';
 
 class MapScreen extends StatefulHookConsumerWidget {
   const MapScreen({super.key});
@@ -64,18 +66,29 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
             MarkerLayer(
               markers: uiState.mapPinList.map(
-                (worldHeritage) {
+                (mapPin) {
                   final size = markerSize * (uiState.currentZoom / initialZoom);
 
                   return Marker(
                     width: size * 2,
                     height: size * 2,
-                    point:
-                        LatLng(worldHeritage.latitude, worldHeritage.longitude),
-                    builder: (ctx) => Icon(
-                      Icons.place,
-                      color: Colors.blue,
-                      size: size,
+                    point: LatLng(
+                      mapPin.latitude,
+                      mapPin.longitude,
+                    ),
+                    builder: (ctx) => GestureDetector(
+                      onTap: () {
+                        showMapPinModelBottomSheet(
+                          context: context,
+                          geoElementId: mapPin.id,
+                          geoElementName: mapPin.name,
+                        );
+                      },
+                      child: Icon(
+                        Icons.place,
+                        color: Colors.blue,
+                        size: size,
+                      ),
                     ),
                   );
                 },

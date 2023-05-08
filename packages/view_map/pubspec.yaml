@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  core_model:
+    path: ../core_model
   core_repository:
     path: ../core_repository
   core_domain:

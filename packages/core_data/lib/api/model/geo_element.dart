@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'geo_element.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class GeoElementResponseData {
+class GeoElement {
   final String? type;
   @JsonKey(name: "id")
   final int elementId;
@@ -12,9 +12,9 @@ class GeoElementResponseData {
   final double? latitude;
   @JsonKey(name: "lon")
   final double? longitude;
-  final GeoTagsResponseData? tags;
+  final GeoTags? tags;
 
-  GeoElementResponseData({
+  GeoElement({
     required this.type,
     required this.elementId,
     required this.latitude,
@@ -22,7 +22,7 @@ class GeoElementResponseData {
     required this.tags,
   });
 
-  factory GeoElementResponseData.fromJson(Map<String, dynamic> json) =>
+  factory GeoElement.fromJson(Map<String, dynamic> json) =>
       _$GeoElementFromJson(json);
 
   Map<String, dynamic> toJson() => _$GeoElementToJson(this);

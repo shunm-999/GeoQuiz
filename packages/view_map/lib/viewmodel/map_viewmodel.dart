@@ -1,8 +1,21 @@
+import 'package:core_domain/di/usecase_provider.dart';
 import 'package:core_domain/map/map_coordinates_evenly_spaced_usecase.dart';
+import 'package:core_repository/di/repository_provider.dart';
 import 'package:core_repository/geo_element_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+
+final mapViewModelProvider =
+    StateNotifierProvider.autoDispose<MapViewModel, MapUiState>((ref) {
+  final geoElementRepository = ref.watch(geoElementRepositoryProvider);
+  final mapCoordinatesEvenlySpacedUseCase =
+      ref.watch(mapCoordinatesEvenlySpacedUseCaseProvider);
+  return MapViewModel(
+    geoElementRepository: geoElementRepository,
+    mapCoordinatesEvenlySpacedUseCase: mapCoordinatesEvenlySpacedUseCase,
+  );
+});
 
 @immutable
 class MapUiState {
@@ -30,11 +43,13 @@ class MapUiState {
 }
 
 class MapPin {
+  final int id;
   final String name;
   final double latitude;
   final double longitude;
 
   MapPin({
+    required this.id,
     required this.name,
     required this.latitude,
     required this.longitude,
@@ -88,6 +103,7 @@ class MapViewModel extends StateNotifier<MapUiState> {
 
           final mapPinList = selectedGeoElements.map((element) {
             return MapPin(
+              id: element.elementId,
               name: element.tags?.name ?? "",
               latitude: element.latitude ?? 0,
               longitude: element.longitude ?? 0,
