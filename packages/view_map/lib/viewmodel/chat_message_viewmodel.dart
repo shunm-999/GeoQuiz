@@ -40,11 +40,11 @@ class ChatMessageViewModel extends StateNotifier<ChatMessageUiState> {
           ),
         );
 
-  void addChatMessage({
+  void sendChatMessage({
     required int geoElementId,
     required String message,
   }) {
-    _chatMessageRepository.addUserMessage(
+    _chatMessageRepository.sendUserMessage(
       geoElementId: geoElementId,
       message: message,
     );

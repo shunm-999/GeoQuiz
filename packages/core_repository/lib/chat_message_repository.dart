@@ -2,7 +2,7 @@ import 'package:core_model/chat_message.dart';
 import 'package:core_model/result.dart';
 
 abstract class ChatMessageRepository {
-  void addUserMessage({
+  Future<void> sendUserMessage({
     required int geoElementId,
     required String message,
   });

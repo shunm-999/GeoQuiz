@@ -58,7 +58,7 @@ class _GeoElementDetailBottomSheetState
   }
 
   void _onSubmitted(String value) {
-    viewModel.addChatMessage(
+    viewModel.sendChatMessage(
       geoElementId: widget.geoElementId,
       message: value,
     );

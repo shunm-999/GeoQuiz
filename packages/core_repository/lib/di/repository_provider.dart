@@ -7,9 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final geoElementRepositoryProvider = Provider<GeoElementRepository>((ref) {
   final overpassClient = ref.watch(overpassClientProvider);
-  return GeoElementRepositoryImpl(client: overpassClient);
+  return GeoElementRepositoryImpl(
+    client: overpassClient,
+  );
 });
 
 final chatMessageRepositoryProvider = Provider<ChatMessageRepository>((ref) {
-  return ChatMessageRepositoryImpl();
+  final chatMessageClient = ref.watch(chatMessageClientProvider);
+  return ChatMessageRepositoryImpl(
+    chatMessageClient: chatMessageClient,
+  );
 });
