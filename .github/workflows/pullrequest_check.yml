@@ -22,13 +22,13 @@ jobs:
       run: dart pub global activate melos
 
     - name: Bootstrap Melos
-      run: melos bootstrap
+      run: dart pub global run melos bootstrap
 
     - name: Format check
-      run: melos run format:check
+      run: dart pub global run melos run format:check
 
     - name: Analyze
-      run: melos run analyze
+      run: dart pub global run melos run analyze
 
     - name: Test
-      run: melos run test
+      run: dart pub global run melos run test
