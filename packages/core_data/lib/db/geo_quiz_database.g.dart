@@ -24,6 +24,11 @@ class $ChatMessagesTable extends ChatMessages
   late final GeneratedColumn<int> geoElementId = GeneratedColumn<int>(
       'geo_element_id', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<int> type = GeneratedColumn<int>(
+      'type', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _messageMeta =
       const VerificationMeta('message');
   @override
@@ -44,7 +49,7 @@ class $ChatMessagesTable extends ChatMessages
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, geoElementId, message, createdAt, updatedAt];
+      [id, geoElementId, type, message, createdAt, updatedAt];
   @override
   String get aliasedName => _alias ?? 'chat_messages';
   @override
@@ -64,6 +69,12 @@ class $ChatMessagesTable extends ChatMessages
               data['geo_element_id']!, _geoElementIdMeta));
     } else if (isInserting) {
       context.missing(_geoElementIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
     }
     if (data.containsKey('message')) {
       context.handle(_messageMeta,
@@ -96,6 +107,8 @@ class $ChatMessagesTable extends ChatMessages
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       geoElementId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}geo_element_id'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}type'])!,
       message: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}message'])!,
       createdAt: attachedDatabase.typeMapping
@@ -114,12 +127,14 @@ class $ChatMessagesTable extends ChatMessages
 class ChatMessage extends DataClass implements Insertable<ChatMessage> {
   final int id;
   final int geoElementId;
+  final int type;
   final String message;
   final DateTime createdAt;
   final DateTime updatedAt;
   const ChatMessage(
       {required this.id,
       required this.geoElementId,
+      required this.type,
       required this.message,
       required this.createdAt,
       required this.updatedAt});
@@ -128,6 +143,7 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['geo_element_id'] = Variable<int>(geoElementId);
+    map['type'] = Variable<int>(type);
     map['message'] = Variable<String>(message);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
@@ -138,6 +154,7 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
     return ChatMessagesCompanion(
       id: Value(id),
       geoElementId: Value(geoElementId),
+      type: Value(type),
       message: Value(message),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
@@ -150,6 +167,7 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
     return ChatMessage(
       id: serializer.fromJson<int>(json['id']),
       geoElementId: serializer.fromJson<int>(json['geoElementId']),
+      type: serializer.fromJson<int>(json['type']),
       message: serializer.fromJson<String>(json['message']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -161,6 +179,7 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'geoElementId': serializer.toJson<int>(geoElementId),
+      'type': serializer.toJson<int>(type),
       'message': serializer.toJson<String>(message),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -170,12 +189,14 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
   ChatMessage copyWith(
           {int? id,
           int? geoElementId,
+          int? type,
           String? message,
           DateTime? createdAt,
           DateTime? updatedAt}) =>
       ChatMessage(
         id: id ?? this.id,
         geoElementId: geoElementId ?? this.geoElementId,
+        type: type ?? this.type,
         message: message ?? this.message,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -185,6 +206,7 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
     return (StringBuffer('ChatMessage(')
           ..write('id: $id, ')
           ..write('geoElementId: $geoElementId, ')
+          ..write('type: $type, ')
           ..write('message: $message, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -194,13 +216,14 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
 
   @override
   int get hashCode =>
-      Object.hash(id, geoElementId, message, createdAt, updatedAt);
+      Object.hash(id, geoElementId, type, message, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ChatMessage &&
           other.id == this.id &&
           other.geoElementId == this.geoElementId &&
+          other.type == this.type &&
           other.message == this.message &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -209,12 +232,14 @@ class ChatMessage extends DataClass implements Insertable<ChatMessage> {
 class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
   final Value<int> id;
   final Value<int> geoElementId;
+  final Value<int> type;
   final Value<String> message;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const ChatMessagesCompanion({
     this.id = const Value.absent(),
     this.geoElementId = const Value.absent(),
+    this.type = const Value.absent(),
     this.message = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -222,16 +247,19 @@ class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
   ChatMessagesCompanion.insert({
     this.id = const Value.absent(),
     required int geoElementId,
+    required int type,
     required String message,
     required DateTime createdAt,
     required DateTime updatedAt,
   })  : geoElementId = Value(geoElementId),
+        type = Value(type),
         message = Value(message),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<ChatMessage> custom({
     Expression<int>? id,
     Expression<int>? geoElementId,
+    Expression<int>? type,
     Expression<String>? message,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -239,6 +267,7 @@ class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (geoElementId != null) 'geo_element_id': geoElementId,
+      if (type != null) 'type': type,
       if (message != null) 'message': message,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
@@ -248,12 +277,14 @@ class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
   ChatMessagesCompanion copyWith(
       {Value<int>? id,
       Value<int>? geoElementId,
+      Value<int>? type,
       Value<String>? message,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
     return ChatMessagesCompanion(
       id: id ?? this.id,
       geoElementId: geoElementId ?? this.geoElementId,
+      type: type ?? this.type,
       message: message ?? this.message,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -268,6 +299,9 @@ class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
     }
     if (geoElementId.present) {
       map['geo_element_id'] = Variable<int>(geoElementId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(type.value);
     }
     if (message.present) {
       map['message'] = Variable<String>(message.value);
@@ -286,6 +320,7 @@ class ChatMessagesCompanion extends UpdateCompanion<ChatMessage> {
     return (StringBuffer('ChatMessagesCompanion(')
           ..write('id: $id, ')
           ..write('geoElementId: $geoElementId, ')
+          ..write('type: $type, ')
           ..write('message: $message, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')

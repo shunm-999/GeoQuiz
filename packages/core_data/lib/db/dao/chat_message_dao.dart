@@ -14,12 +14,12 @@ class ChatMessageDao extends DatabaseAccessor<GeoQuizDatabase>
   Stream<List<ChatMessage>> watchAllChatMessages() =>
       select(chatMessages).watch();
 
-  Future insertChatMessage(ChatMessage chatMessage) =>
+  Future insertChatMessage(ChatMessagesCompanion chatMessage) =>
       into(chatMessages).insert(chatMessage);
 
-  Future updateChatMessage(ChatMessage chatMessage) =>
+  Future updateChatMessage(ChatMessagesCompanion chatMessage) =>
       update(chatMessages).replace(chatMessage);
 
-  Future deleteChatMessage(ChatMessage chatMessage) =>
+  Future deleteChatMessage(ChatMessagesCompanion chatMessage) =>
       delete(chatMessages).delete(chatMessage);
 }
