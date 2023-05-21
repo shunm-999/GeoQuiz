@@ -1,0 +1,29 @@
+name: Dart CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.7'
+          channel: 'stable'
+      - name: Install Melos
+        run: dart pub global activate melos
+      - name: Bootstrap Melos
+        run: dart pub global run melos bootstrap
+      - name: Format check
+        run: dart pub global run melos run format:check
+      - name: Analyze
+        run: dart pub global run melos run analyze
+      - name: Test
+        run: dart pub global run melos run test
+        if: always()

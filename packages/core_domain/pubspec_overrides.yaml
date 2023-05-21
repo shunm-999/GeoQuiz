@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: core_model
-dependency_overrides:
-  core_model:
-    path: ..\\core_model
