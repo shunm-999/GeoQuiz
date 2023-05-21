@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: view_map,core_data,core_model,core_repository,core_domain
+# melos_managed_dependency_overrides: core_data,core_domain,core_model,core_repository,view_map
 dependency_overrides:
   core_data:
     path: packages\\core_data
