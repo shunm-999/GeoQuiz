@@ -18,12 +18,12 @@ dependencies:
   dio: ^5.1.1
 
   drift: ^2.7.0
-  drift_dev: ^2.8.1
   path_provider: ^2.0.9
   path: ^1.8.0
 
   freezed: ^2.3.2
   freezed_annotation: ^2.2.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:

@@ -16,5 +16,5 @@ final overpassClientProvider = Provider<OverpassClient>((ref) {
 
 final chatMessageClientProvider = Provider<ChatMessageClient>((ref) {
   final dioProvider = ref.watch(_dioProvider);
-  return ChatMessageClient(dioProvider, baseUrl: OPENAI_API_HOST);
+  return ChatMessageClient(dioProvider, baseUrl: openApiHost);
 });

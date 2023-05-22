@@ -45,7 +45,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       appBar: AppBar(
         title: const Text("Map"),
       ),
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         child: FlutterMap(
           mapController: _mapController,
