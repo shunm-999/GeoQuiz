@@ -18,9 +18,7 @@ scripts:
 
   test:
     description: Run tests in a specific package.
-    run: dart test
-    exec:
-      concurrency: 1
+    run: flutter test
     packageFilters:
       dirExists:
         - test

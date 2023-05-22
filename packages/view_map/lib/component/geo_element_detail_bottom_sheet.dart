@@ -78,7 +78,7 @@ class _GeoElementDetailBottomSheetState
         top: 8.0,
         bottom: bottomPadding,
       ),
-      child: Container(
+      child: SizedBox(
         height: screenHeight * 0.6,
         child: Column(
           children: [
@@ -216,9 +216,7 @@ class ChatCard extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          child: Text(chatMessage),
-        ),
+        child: Text(chatMessage),
       ),
     );
   }

@@ -25,7 +25,7 @@ class _OverpassClient implements OverpassClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'data': data};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<OverpassResponse>(Options(
       method: 'GET',

@@ -1,4 +1,4 @@
-name: Dart CI
+name: Check Pull Request
 
 on:
   push:
@@ -16,6 +16,8 @@ jobs:
         with:
           flutter-version: '3.7.7'
           channel: 'stable'
+      - name: Create secret_key.dart
+        run: echo "const openApiHost = '${{ secrets.OPEN_API_HOST }}';" > packages/core_data/lib/api/secret_key.dart
       - name: Install Melos
         run: dart pub global activate melos
       - name: Bootstrap Melos
