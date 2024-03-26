@@ -31,7 +31,7 @@ dependencies:
 
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.18.0
+  flutter_hooks: ^0.20.0
   hooks_riverpod: ^2.1.1
   sqlite3_flutter_libs: ^0.5.5
   sqlite3: ^1.11.0
